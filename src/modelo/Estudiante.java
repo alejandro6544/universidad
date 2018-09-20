@@ -5,12 +5,16 @@
  */
 package modelo;
 
+import control.ConnectBD;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author dacastro
  */
 public class Estudiante {
-    
+
     private String identificacione;
     private String codigoe;
     private String nombre1e;
@@ -48,6 +52,17 @@ public class Estudiante {
         this.jornada = jornada;
     }
 
+    public Estudiante(String identificacione, String codigoe, String nombre1e, String apellido1e, String direccione, String correoe, String jornada, String Fotoestudiante) {
+        this.identificacione = identificacione;
+        this.codigoe = codigoe;
+        this.nombre1e = nombre1e;
+        this.apellido1e = apellido1e;
+        this.direccione = direccione;
+        this.correoe = correoe;
+        this.jornada = jornada;
+        this.Fotoestudiante = Fotoestudiante;
+    }
+
     /**
      * Get the value of Fotoestudiante
      *
@@ -65,7 +80,6 @@ public class Estudiante {
     public void setFotoestudiante(String Fotoestudiante) {
         this.Fotoestudiante = Fotoestudiante;
     }
-
 
     /**
      * Get the value of jornada
@@ -85,7 +99,6 @@ public class Estudiante {
         this.jornada = jornada;
     }
 
-
     /**
      * Get the value of correoe
      *
@@ -103,7 +116,6 @@ public class Estudiante {
     public void setCorreoe(String correoe) {
         this.correoe = correoe;
     }
-
 
     /**
      * Get the value of direccione
@@ -123,7 +135,6 @@ public class Estudiante {
         this.direccione = direccione;
     }
 
-
     /**
      * Get the value of apellido2e
      *
@@ -141,7 +152,6 @@ public class Estudiante {
     public void setApellido2e(String apellido2e) {
         this.apellido2e = apellido2e;
     }
-
 
     /**
      * Get the value of apellido1e
@@ -161,7 +171,6 @@ public class Estudiante {
         this.apellido1e = apellido1e;
     }
 
-
     /**
      * Get the value of nombre2e
      *
@@ -179,7 +188,6 @@ public class Estudiante {
     public void setNombre2e(String nombre2e) {
         this.nombre2e = nombre2e;
     }
-
 
     /**
      * Get the value of nombre1e
@@ -199,7 +207,6 @@ public class Estudiante {
         this.nombre1e = nombre1e;
     }
 
-
     /**
      * Get the value of codigoe
      *
@@ -217,8 +224,6 @@ public class Estudiante {
     public void setCodigoe(String codigoe) {
         this.codigoe = codigoe;
     }
-
-    
 
     /**
      * Get the value of identificacione
@@ -241,6 +246,21 @@ public class Estudiante {
     @Override
     public String toString() {
         return "Estudiante{" + "identificacione=" + identificacione + ", codigoe=" + codigoe + ", nombre1e=" + nombre1e + ", nombre2e=" + nombre2e + ", apellido1e=" + apellido1e + ", apellido2e=" + apellido2e + ", direccione=" + direccione + ", correoe=" + correoe + ", jornada=" + jornada + ", Fotoestudiante=" + Fotoestudiante + '}';
+    }
+
+    public boolean insertEstudiante(String sql) {
+        ConnectBD objCon = new ConnectBD();
+
+        if (objCon.crearConexion()) {
+            try {
+                Statement sentencia = objCon.getConexion().createStatement();
+                sentencia.executeUpdate(sql);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 
 }
