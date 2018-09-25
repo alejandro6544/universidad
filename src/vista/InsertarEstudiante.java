@@ -65,7 +65,7 @@ public class InsertarEstudiante extends javax.swing.JFrame {
 
         jLabel2.setText("Identificacion");
 
-        jLabel3.setText("Identificacion");
+        jLabel3.setText("Código");
 
         jLabel4.setText("Nombre");
 

@@ -6,8 +6,14 @@
 package modelo;
 
 import control.ConnectBD;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -261,6 +267,54 @@ public class Estudiante {
             }
         }
         return true;
+    }
+
+    public boolean insertEstudianteImg(String sql, LinkedList<Estudiante> le) {
+        FileInputStream fis = null;
+        boolean t=false;
+        PreparedStatement ps = null;
+        ConnectBD objC = new ConnectBD();
+        for (int i = 0; i < le.size(); i++) {
+            try {
+                if (objC.crearConexion()) {
+                    objC.getConexion().setAutoCommit(false);
+                    File file = new File(le.get(i).getFotoestudiante());
+                    fis = new FileInputStream(file);
+                    ps = objC.getConexion().prepareStatement(sql);
+                    ps.setString(1, le.get(i).getIdentificacione());
+                    ps.setString(2, le.get(i).getCodigoe());
+                    ps.setString(3, le.get(i).getNombre1e());
+                    ps.setString(4, le.get(i).getApellido1e());
+                    ps.setString(5, le.get(i).getDireccione());
+                    ps.setString(6, le.get(i).getCorreoe());
+                    ps.setString(7, le.get(i).getJornada());
+                    ps.setBinaryStream(8, fis, (int) file.length());
+                    ps.executeUpdate();
+                    objC.getConexion().commit();
+                    t= true;
+                }
+            } catch (Exception ex) {
+                System.out.println(" error " + ex.toString());
+                //Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    ps.close();
+                    fis.close();
+                } catch (Exception ex) {
+                    System.out.println(" error " + ex.toString());
+                    //Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        return t;
+    }
+
+    public LinkedList<Estudiante> buscarEst(String sql) {
+        ConnectBD objc=new ConnectBD();
+        if(objc.crearConexion()){
+            
+        }
     }
 
 }

@@ -28,7 +28,7 @@ public class ConnectBD {
         try {
             Class.forName("com.mysql.jdbc.Driver");                                      //user  //pass
             conexion = DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/ucompleta", "adminu", "123123");
+            "jdbc:mysql://localhost:3306/ucompleta", "root", "root");
             st = conexion.createStatement();
         } catch (SQLException ex) {
             ex.printStackTrace();
