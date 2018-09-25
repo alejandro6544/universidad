@@ -23,6 +23,10 @@ public class ConnectBD {
     public Connection getConexion() {
         return conexion;
     }
+
+    public Statement getSt() {
+        return st;
+    }
     
     public boolean crearConexion() {
         try {

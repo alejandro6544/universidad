@@ -6,14 +6,21 @@
 package modelo;
 
 import control.ConnectBD;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -271,7 +278,7 @@ public class Estudiante {
 
     public boolean insertEstudianteImg(String sql, LinkedList<Estudiante> le) {
         FileInputStream fis = null;
-        boolean t=false;
+        boolean t = false;
         PreparedStatement ps = null;
         ConnectBD objC = new ConnectBD();
         for (int i = 0; i < le.size(); i++) {
@@ -291,7 +298,7 @@ public class Estudiante {
                     ps.setBinaryStream(8, fis, (int) file.length());
                     ps.executeUpdate();
                     objC.getConexion().commit();
-                    t= true;
+                    t = true;
                 }
             } catch (Exception ex) {
                 System.out.println(" error " + ex.toString());
@@ -310,11 +317,50 @@ public class Estudiante {
         return t;
     }
 
-    public LinkedList<Estudiante> buscarEst(String sql) {
-        ConnectBD objc=new ConnectBD();
-        if(objc.crearConexion()){
-            
+    public HashMap<Estudiante, Imagen> buscarEst(String sql) {
+        HashMap<Estudiante, Imagen> hs = new HashMap<>();
+        ConnectBD objc = new ConnectBD();
+        if (objc.crearConexion()) {
+
+            try {
+                ResultSet rs = objc.getSt().executeQuery(sql);
+                while (rs.next()) {
+                    Imagen imagen = new Imagen();
+                    String idestudiantes = rs.getObject("identificacione").toString();
+                    String codigoestudiante = rs.getObject("codigoe").toString();
+                    String nombreestudiante = rs.getObject("nombre1e").toString();
+                    String apellidoestudiante = rs.getObject("apellido1e").toString();
+                    String direccionestudiante = rs.getObject("direccione").toString();
+                    String correoestudiante = rs.getObject("correoe").toString();
+                    String j = rs.getObject("jornada").toString();
+                    Blob blob = rs.getBlob("Fotoestudiante");
+                    Estudiante e = new Estudiante(idestudiantes, codigoestudiante,
+                            nombreestudiante, apellidoestudiante, 
+                            direccionestudiante, correoestudiante, j);
+
+                    byte[] data = blob.getBytes(1, (int) blob.length());
+                    BufferedImage img = null;
+                    try {
+                        img = ImageIO.read(new ByteArrayInputStream(data));
+
+                    } catch (IOException ex) {
+                        // Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("error " + ex.toString());
+                    }
+//
+                    imagen.setImagen(img);
+
+                    hs.put(e, imagen);
+//                imagen.setNombre(nombre);
+//                lista.add(imagen);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println("error " + ex.toString());
+            }
+
         }
+        return hs;
     }
 
 }

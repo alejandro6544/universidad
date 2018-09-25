@@ -8,10 +8,14 @@ package vista;
 import control.ControllerEstudiante;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Estudiante;
+import modelo.Imagen;
 
 /**
  *
@@ -243,24 +247,30 @@ public class ModificarEstudiante extends javax.swing.JFrame {
 
         String buscarpor;
         buscarpor = jTextField1.getText();
-        ControllerEstudiante obc=new ControllerEstudiante();
+        ControllerEstudiante obc = new ControllerEstudiante();
         //        boolean conexion;
         //        BaseDatos objbases = new BaseDatos();
-        LinkedList<Estudiante> le= obc.buscarECodigo(buscarpor);
-        
-       
+        HashMap<Estudiante, Imagen> le = obc.buscarECodigo(buscarpor);
+        //le.entrySet().iterator();
 
-                jTextField1.setText(arr.get(0).toString());
-                jTextField2.setText(arr.get(2).toString());
-                jTextField3.setText(arr.get(1).toString());
-                jTextField4.setText(arr.get(3).toString());
-                jTextField5.setText(arr.get(4).toString());
-                jTextField6.setText(arr.get(5).toString());
-                jTextField7.setText(arr.get(6).toString());
-                jLabel9.setIcon(new javax.swing.ImageIcon((Image) arr.get(7)));
-
-            
+        jTextField2.setText(
+                le.entrySet().iterator().next().getKey().getIdentificacione());
+        jTextField3.setText(
+                le.entrySet().iterator().next().getKey().getCodigoe());
+        jTextField4.setText(
+                le.entrySet().iterator().next().getKey().getNombre1e());
         
+        jTextField8.setText(
+                le.entrySet().iterator().next().getKey().getApellido1e());
+        jTextField5.setText(
+                le.entrySet().iterator().next().getKey().getDireccione());
+        jTextField6.setText(
+                le.entrySet().iterator().next().getKey().getCorreoe());
+        jTextField7.setText(
+                le.entrySet().iterator().next().getKey().getJornada());
+        jLabel9.setIcon(
+                new javax.swing.ImageIcon((Image) 
+              le.entrySet().iterator().next().getValue().getImagen()));
 
 
     }//GEN-LAST:event_jButton4ActionPerformed
