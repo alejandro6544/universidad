@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
@@ -335,7 +336,7 @@ public class Estudiante {
                     String j = rs.getObject("jornada").toString();
                     Blob blob = rs.getBlob("Fotoestudiante");
                     Estudiante e = new Estudiante(idestudiantes, codigoestudiante,
-                            nombreestudiante, apellidoestudiante, 
+                            nombreestudiante, apellidoestudiante,
                             direccionestudiante, correoestudiante, j);
 
                     byte[] data = blob.getBytes(1, (int) blob.length());
@@ -361,6 +362,45 @@ public class Estudiante {
 
         }
         return hs;
+    }
+
+    public boolean modificarEstudiante(String sql, Estudiante objE) {
+        boolean t = false;
+        FileInputStream fis = null;
+        ConnectBD objc = new ConnectBD();
+        if (objc.crearConexion()) {
+            try {
+                PreparedStatement preparedStmt
+                        = objc.getConexion().prepareStatement(sql);
+                preparedStmt.setString(1, objE.getIdentificacione());
+                preparedStmt.setString(2, objE.getNombre1e());
+                preparedStmt.setString(3, objE.getApellido1e());
+                preparedStmt.setString(4, objE.getDireccione());
+                preparedStmt.setString(5, objE.getCorreoe());
+                preparedStmt.setString(6, objE.getJornada());
+
+                File file = new File(objE.getFotoestudiante());
+                try {
+                    fis = new FileInputStream(file);
+                    preparedStmt.setBinaryStream(7,
+                            fis, (int) file.length());
+                } catch (FileNotFoundException ex) {
+                    t=false;
+                    System.out.println("Error " + ex.toString());
+                }
+                preparedStmt.setString(8,
+                        objE.getCodigoe());
+                preparedStmt.executeUpdate();
+                preparedStmt.close();
+                t=true;
+            } catch (SQLException e) {
+                t=false;
+                System.out.println("Error " + e.toString());
+            }
+        }
+
+        return t;
+
     }
 
 }

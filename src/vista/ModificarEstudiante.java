@@ -6,7 +6,9 @@
 package vista;
 
 import control.ControllerEstudiante;
+import control.FileController;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +28,11 @@ public class ModificarEstudiante extends javax.swing.JFrame {
     /**
      * Creates new form ModificarEstudiante
      */
+     File filesObj;
+     String Rutaimage;
+     Estudiante objE;
     public ModificarEstudiante() {
+        
         initComponents();
     }
 
@@ -79,6 +85,8 @@ public class ModificarEstudiante extends javax.swing.JFrame {
         jLabel4.setText("Código");
 
         jLabel8.setText("Jornada");
+
+        jTextField3.setEnabled(false);
 
         jButton1.setText("Guardar Cambios");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -235,12 +243,12 @@ public class ModificarEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        FileController objfile = new FileController();
-//        filesObj = objfile.cargarArchivos("JPG file", "PNG file", "jpg", "png");
-//        Rutaimage = filesObj.getAbsolutePath();
-//        System.out.println("ruta imagen " + filesObj.getAbsolutePath());
-//        //BufferedImage buffered = (BufferedImage) image;
-//        jLabel9.setIcon(new javax.swing.ImageIcon(filesObj.getAbsolutePath()));
+        FileController objfile = new FileController();
+        filesObj = objfile.cargarArchivos("JPG file", "PNG file", "jpg", "png");
+        Rutaimage = filesObj.getAbsolutePath();
+        System.out.println("ruta imagen " + filesObj.getAbsolutePath());
+        //BufferedImage buffered = (BufferedImage) image;
+        jLabel9.setIcon(new javax.swing.ImageIcon(filesObj.getAbsolutePath()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -276,15 +284,17 @@ public class ModificarEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        String identificacione = jTextField1.getText();
-//        String codigoe = jTextField2.getText();
-//        String nombre1e = jTextField3.getText();
-//        String apellido1e = jTextField4.getText();
-//        String direccione = jTextField5.getText();
-//        String correoe = jTextField6.getText();
-//        String jornada = jTextField7.getText();
+        String identificacione = jTextField2.getText();
+        String codigoe = jTextField3.getText();
+        String nombre1e = jTextField4.getText();
+        String apellido1e = jTextField8.getText();
+        String direccione = jTextField5.getText();
+        String correoe = jTextField6.getText();
+        String jornada = jTextField7.getText();
 //
-//        le.add(new Estudiante(identificacione, codigoe, nombre1e, apellido1e, direccione, correoe, jornada, Rutaimage));
+
+        objE=new Estudiante(identificacione, codigoe, nombre1e, apellido1e, direccione, correoe, jornada, Rutaimage);
+        boolean t=ControllerEstudiante.modificarEstudiante(objE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

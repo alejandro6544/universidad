@@ -19,10 +19,22 @@ public class ControllerEstudiante {
     public ControllerEstudiante() {
     }
 
+    public static boolean modificarEstudiante(Estudiante objE) {
+        
+        boolean t=false;
+        Estudiante obje=new Estudiante();
+        String sql="update estudiantes set identificacione=?,"
+                + "nombre1e=?, apellido1e=?,direccione=?,correoe=?,"
+                + "jornada=?,Fotoestudiante=? where codigoe = ?;";
+        t=objE.modificarEstudiante(sql, objE);
+        
+        return t;
+    }
+
     public static boolean insertEstudiante(LinkedList<Estudiante> le) {
         boolean ins = false;
         for (int i = 0; i < le.size(); i++) {
-           // System.out.println("xxxx " + le.get(i).toString());
+            // System.out.println("xxxx " + le.get(i).toString());
             String sql = "INSERT INTO estudiantes (identificacione,codigoe,nombre1e,apellido1e,direccione,correoe,jornada) VALUES "
                     + "('" + le.get(i).getIdentificacione() + "', '" + le.get(i).getCodigoe() + "', '" + le.get(i).getNombre1e() + "', '"
                     + le.get(i).getApellido1e() + "', '" + le.get(i).getDireccione() + "', '" + le.get(i).getCorreoe() + "', '" + le.get(i).getJornada() + "');";
@@ -53,12 +65,12 @@ public class ControllerEstudiante {
     }
 
     public HashMap<Estudiante, Imagen> buscarECodigo(String buscarpor) {
-        
-        String sql="Select * from estudiantes where codigoe='"+buscarpor+"';";
-        Estudiante e=new Estudiante();
-        
-        HashMap<Estudiante, Imagen> le=e.buscarEst(sql);
-        
+
+        String sql = "Select * from estudiantes where codigoe='" + buscarpor + "';";
+        Estudiante e = new Estudiante();
+
+        HashMap<Estudiante, Imagen> le = e.buscarEst(sql);
+
         return le;
     }
 }

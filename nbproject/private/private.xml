@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/vista/Universidad.java</file>
+            <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/vista/ModificarEstudiante.java</file>
             <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/control/ConnectBD.java</file>
+            <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/control/ControllerEstudiante.java</file>
+            <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/vista/InsertarEstudiante.java</file>
             <file>file:/D:/Users/dacastro/Documents/NetBeansProjects/universidad/src/modelo/Estudiante.java</file>
         </group>
     </open-files>
